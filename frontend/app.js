@@ -45,6 +45,10 @@ globalThis.addEventListener("DOMContentLoaded", async () => {
     }
     // trigger the global user state:
     app.state.user = null;
+
+    // clear the cart:
+    app.state.cart = [];
+
     document.querySelector(".hide-login").style.display = "block";
     document.getElementById("login-user").style.display = "none";
     logout.style.display = "none";
