@@ -46,6 +46,7 @@ export class ProductsPage extends HTMLElement {
     } else {
       products.forEach((product) => {
         const productItem = document.createElement("li");
+
         productItem.innerHTML = `
         <div class = "product"
         
@@ -56,6 +57,7 @@ export class ProductsPage extends HTMLElement {
         >
             <img
             src=${product.thumbnail}
+
 
              
             />
@@ -68,6 +70,7 @@ export class ProductsPage extends HTMLElement {
           </div>
 
             `;
+
         // Prevent button click from triggering the parent div's onClick event
         const button = productItem.querySelector("button");
 
@@ -82,8 +85,7 @@ export class ProductsPage extends HTMLElement {
           const productId = event.currentTarget.dataset.id;
 
           // add to cart:
-          const data = await addToCart(productId);
-          console.log(data);
+          await addToCart(productId);
 
           // localStorage.setItem("cart", JSON.stringify(app.state.cart));
 

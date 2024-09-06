@@ -9,23 +9,47 @@ export async function openDB() {
   });
 }
 
-export async function saveDB() {
+export async function saveDB(userId, cart) {
+  if (!userId) {
+    console.error("User ID is not provided for saving the cart.");
+    return;
+  }
+
   const db = await app.openDB();
-  await db.put("order", JSON.stringify(app.state.cart), "cart");
+
+  try {
+    // Save the cart to the 'order' store with the userId as the key
+    await db.put("order", JSON.stringify(cart), userId);
+  } catch (error) {
+    console.error("Failed to save the cart to IndexedDB:", error);
+  }
 }
 
-export async function loadDB() {
+export async function loadDB(userId) {
+  if (!userId) {
+    console.error("User ID is not provided for loading the cart.");
+    app.state.cart = []; // Initialize an empty cart if userId is missing
+    return;
+  }
+
   const db = await app.openDB();
 
-  //get from the indexdb
-  const cart = await db.get("order", "cart");
+  try {
+    // Get the cart for the specific user from the 'order' store
+    const cart = await db.get("order", userId);
 
-  if (cart) {
-    try {
-      app.state.cart = JSON.parse(cart) || [];
-    } catch (error) {
-      console.error("Error parsing cart", error);
+    if (cart) {
+      try {
+        app.state.cart = JSON.parse(cart) || [];
+      } catch (error) {
+        console.error("Error parsing cart", error);
+        app.state.cart = [];
+      }
+    } else {
+      app.state.cart = []; // Initialize an empty cart if none exists
     }
+  } catch (error) {
+    console.error("Failed to load the cart from IndexedDB:", error);
   }
 }
 

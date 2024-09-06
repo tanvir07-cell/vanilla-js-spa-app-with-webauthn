@@ -10,12 +10,9 @@ import Auth from "./services/LoginWithGoogle.js";
 
 import { ProductsPage } from "./components/ProductsPage.js";
 import { DetailsPage } from "./components/DetailsPage.js";
-import { OrderPage } from "./components/OrderPage.js";
-import { LoginPage } from "./components/LoginPage.js";
-import { RegisterPage } from "./components/RegisterPage.js";
 import { ToastMessage } from "./components/ToastMessage.js";
 
-import { loadDB, loadProductDB, openDB } from "./services/idb.js";
+import { loadDB, loadProductDB, openDB, saveDB } from "./services/idb.js";
 
 globalThis.app = {
   state: STATE,
@@ -24,11 +21,13 @@ globalThis.app = {
 };
 
 globalThis.addEventListener("app:user-updated", () => {
+  console.log("user updated");
+
   const loginSpan = document.getElementById("login-user");
 
   loginSpan.style.display = "block";
   loginSpan.textContent =
-    app.state.user.id || app.state.user.email || app.state.user.picture;
+    app.state?.user?.id || app.state?.user?.email || app.state?.user?.picture;
 
   if (app.state.user) {
     document.querySelector(".hide-login").style.display = "none";
@@ -72,11 +71,23 @@ globalThis.addEventListener("DOMContentLoaded", async () => {
   }
 
   // load products from network and indexdb and store it to the app.state.products array
-  loadProductDB();
+  await loadProductDB();
 
   // load cart from the indexdb:
+  async function onUserLogin() {
+    const userId = app.state.user?.email || app.state.user?.id;
 
-  loadDB();
+    if (userId) {
+      // Load the user's cart
+      await loadDB(userId);
+    } else {
+      console.error("User ID is not available.");
+    }
+
+    // You may want to re-render the cart UI here
+  }
+
+  await onUserLogin();
 
   // Update the cart badge on initial load
   updateCartBadge();

@@ -44,7 +44,10 @@ export class DetailsPage extends HTMLElement {
       if (product) {
         detailsDiv.innerHTML = `
           <div class="product">
-            <img src=${product.thumbnail} />
+            <img src=${product.thumbnail}
+            part="image"
+
+            />
             <h2>${product.title}</h2>
             <p>${product.description}</p>
             <p>$ ${product.price}</p>

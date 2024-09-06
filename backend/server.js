@@ -434,6 +434,39 @@ app.post("/auth/webauth-login-verification", async (req, res) => {
   });
 });
 
+app.post("/auth/cart", (req, res) => {
+  const { product, user } = req.body;
+
+  const userExist = findUser(user);
+
+  if (!userExist) {
+    return res.status(400).send({ ok: false, message: "User not found" });
+  }
+
+  if (!userExist.cart || userExist.cart.length === 0) {
+    userExist.cart = [];
+
+    userExist.cart.push(product);
+
+    db.write();
+
+    return res.status(200).send({
+      ok: true,
+      message: "Product added to cart",
+      user: userExist,
+    });
+  } else {
+    userExist.cart.push(product);
+
+    db.write();
+    res.status(200).send({
+      ok: true,
+      message: "Product added to cart",
+      user: userExist,
+    });
+  }
+});
+
 app.get("*", (req, res) => {
   res.sendFile(new URL("../frontend/index.html", import.meta.url).pathname);
 });
