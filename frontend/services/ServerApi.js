@@ -1,5 +1,5 @@
 const ServerApi = {
-  endpoint: "/auth/",
+  endpoint: "http://localhost:5050/auth/",
   // ADD HERE ALL THE OTHER API FUNCTIONS
   login: async (user) => {
     return await ServerApi.makePostRequest(ServerApi.endpoint + "login", user);
