@@ -187,9 +187,23 @@ globalThis.addEventListener("visibilitychange", (event) => {
     );
     console.log(`Back from the background after ${timeElapsed}s`);
 
-    if (timeElapsed >= 60 && app.state.user) {
+    // 3 means 3second
+    if (timeElapsed >= 3 && app.state.user) {
+      const toast = document.createElement("toast-message");
+
+      toast.shadowRoot.querySelector(".toast").style.backgroundColor =
+        "#C51B51";
+
+      document.body.appendChild(toast);
+
+      toast.showMessage(
+        `${app.state.user.email || app.state.user.id} is logged out!`
+      );
+
+      console.log(toast.shadowRoot);
       console.log("hello 3s");
       app.state.user = null;
+
       const logout = document.querySelector(".logout");
       logout.style.display = "none";
       document.querySelector(".hide-login").style.display = "block";
