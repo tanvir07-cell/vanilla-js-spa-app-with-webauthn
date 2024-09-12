@@ -38,7 +38,6 @@ globalThis.addEventListener("app:user-updated", () => {
 globalThis.addEventListener("DOMContentLoaded", async () => {
   // logout:
   const logout = document.querySelector(".logout");
-  console.log(logout);
   logout.addEventListener("click", () => {
     if (window.PasswordCredential) {
       navigator.credentials.preventSilentAccess();
@@ -173,3 +172,27 @@ globalThis.addEventListener("app:cart-updated", () => {
     console.log(`quota usage: ${q.usage / 1024}KiB`);
   }
 })();
+
+// for background:
+
+let backgroundInitialTime;
+globalThis.addEventListener("visibilitychange", (event) => {
+  if (document.visibilityState === "hidden") {
+    const now = new Date().toLocaleTimeString();
+    console.log(`Going to the background at ${now}`);
+    backgroundInitialTime = performance.now();
+  } else {
+    const timeElapsed = parseInt(
+      (performance.now() - backgroundInitialTime) / 1000
+    );
+    console.log(`Back from the background after ${timeElapsed}s`);
+
+    if (timeElapsed >= 3 && app.state.user) {
+      console.log("hello 3s");
+      app.state.user = null;
+      const logout = document.querySelector(".logout");
+      logout.style.display = "none";
+      document.querySelector(".hide-login").style.display = "block";
+    }
+  }
+});

@@ -28,6 +28,8 @@ self.addEventListener("install", async (event) => {
     "https://fonts.googleapis.com/css?family=Rancho&effect=shadow-multiple|3d-float|fire-animation|neon|outline|emboss|shadow-multiple|shadow-sweep|shadow-w-multiple|shadow-w-super|shadow-amour|shadow-into-light|shadow-into-light-two|shadow-dancer",
     "https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200",
     "https://fonts.gstatic.com/s/rancho/v21/46kulbzmXjLaqZRVam_hVUdI1w.woff2",
+    "https://accounts.google.com/gsi/client",
+    // "https://unpkg.com/@simplewebauthn/browser/dist/bundle/index.umd.min.js",
   ];
   const cache = await caches.open("cm-assets");
   cache.addAll(assets);
