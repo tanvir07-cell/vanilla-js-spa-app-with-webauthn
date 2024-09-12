@@ -187,7 +187,7 @@ globalThis.addEventListener("visibilitychange", (event) => {
     );
     console.log(`Back from the background after ${timeElapsed}s`);
 
-    if (timeElapsed >= 3 && app.state.user) {
+    if (timeElapsed >= 60 && app.state.user) {
       console.log("hello 3s");
       app.state.user = null;
       const logout = document.querySelector(".logout");
