@@ -39,6 +39,8 @@ export class ProductsPage extends HTMLElement {
     const products = app.state.products;
     const productsList = this.root.querySelector("#products");
 
+    function appendChild() {}
+
     productsList.innerHTML = "";
 
     if (products.length === 0) {

@@ -138,6 +138,10 @@ document.getElementById("downloadButton").addEventListener("click", (e) => {
 
 function updateCartBadge() {
   const badge = document.querySelector("#badge");
+
+  if (!app.state.cart) {
+    app.state.cart = [];
+  }
   const qty = app.state.cart.reduce((acc, item) => acc + item.quantity, 0);
   badge.textContent = qty;
   badge.hidden = qty === 0;
@@ -203,6 +207,7 @@ globalThis.addEventListener("visibilitychange", (event) => {
       console.log(toast.shadowRoot);
       console.log("hello 3s");
       app.state.user = null;
+      app.state.cart = null;
 
       const logout = document.querySelector(".logout");
       logout.style.display = "none";

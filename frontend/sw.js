@@ -78,3 +78,11 @@ self.addEventListener("fetch", (event) => {
     })()
   );
 });
+
+self.addEventListener("sync", (event) => {
+  if (event.tag === "sync-test") {
+    console.log("sync event fired");
+  } else {
+    console.log("sync event not fired");
+  }
+});

@@ -737,6 +737,12 @@
         }
       ],
       "webauthn": true
+    },
+    {
+      "name": "Tanvir Rifat",
+      "email": "tr9836859ds@gmail.com",
+      "password": "$2a$10$u5x373UCefMFEjM6jgVsMeTLfU.cueW4fQD0ulkvovoya4KfVuV3a",
+      "verified": false
     }
   ]
 }
